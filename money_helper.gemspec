@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version     = '0.0.3'
   s.date        = '2013-07-17'
   s.summary     = "MoneyHelper international price formatting utility"
-  s.description = "A simple class to assist in formatting unambiguous prices and price ranges in international currencies in a Roman Script context."
+  s.description = "A simple module to assist in formatting unambiguous prices and price ranges in international currencies in a Roman Script context."
   s.authors     = ["Sahil Yakhmi", "Joey Aghion"]
   s.email       = 'sahil@artsymail.net'
   s.files       = Dir['lib/*.rb']
