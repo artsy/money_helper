@@ -4,7 +4,7 @@ require 'active_support/core_ext/object/blank'
 require 'money'
 
 module MoneyHelper
-  
+
   SYMBOL_ONLY = %w{USD GBP EUR MYR TRY} #don't use ISO code
   OK_SYMBOLS = %w{
     $ £ € ¥ 元 р. L ƒ ৳ P R$ K ₡ D ლ ₵ Q G ₹ Rp ₪ ₩ ₭ R RM ₨ ₮ դր. C$ ₦ TL ₲ ₱ T ฿ T$ m ₴ ₫ ៛
@@ -27,9 +27,10 @@ module MoneyHelper
   def self.money_to_text(amount, currency, number_only = false)
     return nil unless amount.present?
     currency = "USD" if currency.blank?
-    symbol = Money::Currency.new(currency).symbol.strip
-    include_symbol = !number_only && OK_SYMBOLS.include?(symbol)
-    (number_only || SYMBOL_ONLY.include?(currency) ? "" : currency + " ") + 
+    symbol = Money::Currency.new(currency).symbol
+    symbol.strip! if symbol
+    include_symbol = !number_only && symbol && OK_SYMBOLS.include?(symbol)
+    (number_only || SYMBOL_ONLY.include?(currency) ? "" : currency + " ") +
       Money.parse(amount.ceil, currency).format({
         no_cents: true,
         symbol_position: :before,
@@ -66,5 +67,5 @@ module MoneyHelper
       [ money_to_text(low, currency), money_to_text(high, currency, true) ].compact.join(delimiter)
     end
   end
-  
+
 end
