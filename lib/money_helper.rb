@@ -28,8 +28,8 @@ module MoneyHelper
     return nil unless amount.present?
     currency = "USD" if currency.blank?
     symbol = Money::Currency.new(currency).symbol
-    symbol.strip! if symbol
-    include_symbol = !number_only && symbol && OK_SYMBOLS.include?(symbol)
+    symbol.strip! if symbol.present?
+    include_symbol = !number_only && symbol.present? && OK_SYMBOLS.include?(symbol)
     (number_only || SYMBOL_ONLY.include?(currency) ? "" : currency + " ") +
       Money.parse(amount.ceil, currency).format({
         no_cents: true,
