@@ -130,12 +130,6 @@ describe MoneyHelper do
       MoneyHelper.money_to_text(30000, "").should eql("$30,000")
       MoneyHelper.money_to_text(30000, nil).should eql("$30,000")
     end
-    it "returns only formatted numeral when number_only = true" do
-      MoneyHelper.money_to_text(30000, "EUR", true).should eql("30.000")
-      MoneyHelper.money_to_text(30000, "AUD", true).should eql("30,000")
-      MoneyHelper.money_to_text(30000, "AMD", true).should eql("30,000")
-      MoneyHelper.money_to_text(30000, "AFN", true).should eql("30,000")
-    end
     it "returns only the formatted numeral when number_only = true" do
       MoneyHelper.money_to_text(30000, "EUR", true).should eql("30.000")
       MoneyHelper.money_to_text(30000, "AUD", true).should eql("30,000")
