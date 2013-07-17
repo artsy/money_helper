@@ -1,4 +1,4 @@
-money_helper
+MoneyHelper
 ============
 
 A simple class to assist in formatting unambiguous prices and price ranges in international currencies in a Roman Script environment.
