@@ -1,14 +1,18 @@
 # encoding: UTF-8
 
+require 'active_support/core_ext/object/blank'
+require 'money'
+
 module MoneyHelper
   
-  SYMBOL_ONLY = %w{USD GBP EUR RM TL} #don't use ISO code
+  SYMBOL_ONLY = %w{USD GBP EUR MYR TRY} #don't use ISO code
   OK_SYMBOLS = %w{
-    $ £ € ¥ 元 р. L ƒ ৳ P R$ K ₡ D ლ ₵ Q G L ₹ Rp ₪ ₩ ₭ R RM ₨ ₮ դր C$ ₦ TL K ₲ ₱ T ฿ T$ m ₴ ₫
+    $ £ € ¥ 元 р. L ƒ ৳ P R$ K ₡ D ლ ₵ Q G ₹ Rp ₪ ₩ ₭ R RM ₨ ₮ դր. C$ ₦ TL ₲ ₱ T ฿ T$ m ₴ ₫ ៛
   } #ok to include in string
 
   ##
-  # Formats a single amount in the given currency into a price string
+  # Formats a single amount in the given currency into a price string. Defaults to USD if currency not
+  #   given.
   #
   # = Example
   #
@@ -18,16 +22,19 @@ module MoneyHelper
   #
   #   amount: (Float)
   #   currency: (String)
-  #   number_only: (Boolean) optional flag to exclude currency indicators
+  #   number_only: (Boolean) optional flag to exclude currency indicators (retains number formatting
+  #     specific to currency)
   def self.money_to_text(amount, currency, number_only = false)
     return nil unless amount.present?
-    currency_obj = Money::Currency.new(currency)
-    (number_only || SYMBOL_ONLY.include?(currency) ? '' : currency + ' ') + 
-      Money.parse(amount.ceil, currency.presence).format({
+    currency = "USD" if currency.blank?
+    symbol = Money::Currency.new(currency).symbol.strip
+    include_symbol = !number_only && OK_SYMBOLS.include?(symbol)
+    (number_only || SYMBOL_ONLY.include?(currency) ? "" : currency + " ") + 
+      Money.parse(amount.ceil, currency).format({
         no_cents: true,
         symbol_position: :before,
-        symbol: (!number_only && OK_SYMBOLS.include?(currency_obj.symbol))
-      })
+        symbol: include_symbol
+      }).delete(' ')
   end
 
   ##
@@ -47,11 +54,11 @@ module MoneyHelper
   #   currency: (String)
   #   delimiter: (String) optional
   def self.money_range_to_text(low, high, currency, delimiter = ' - ')
-    if low.nil? && high.nil?
+    if low.blank? && high.blank?
       nil
-    elsif low.nil?
+    elsif low.blank?
       "Under " + money_to_text(high, currency)
-    elsif high.nil?
+    elsif high.blank?
       money_to_text(low, currency) + " and up"
     elsif low == high
       money_to_text(low, currency)

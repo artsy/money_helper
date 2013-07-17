@@ -1,7 +1,7 @@
 money_helper
 ============
 
-A simple class to assist in formatting unambiguous prices and price ranges in international currencies
+A simple class to assist in formatting unambiguous prices and price ranges in international currencies in a Roman Script environment.
 
 Usage
 -----
@@ -32,4 +32,4 @@ Copyright and License
 
 MIT License, see [LICENSE](LICENSE.md) for details.
 
-(c) 2013 [Artsy](http://artsy.github.com), [Sahil Yakhmi](https://github.com/fancyremarker), [Daniel Doubrovkine](https://github.com/dblock) and [contributors](CHANGELOG.md).
+(c) 2013 [Artsy](http://artsy.github.com), [Sahil Yakhmi](https://github.com/syakhmi), [Joey Aghion](https://github.com/joeyAghion) and [contributors](CHANGELOG.md).
