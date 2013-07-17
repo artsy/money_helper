@@ -102,6 +102,9 @@ describe MoneyHelper do
       MoneyHelper.money_to_text(30000, "WST").should eql("WST T30,000")
       MoneyHelper.money_to_text(30000, "ZAR").should eql("ZAR R30,000")
     end
+    it "includes only ISO code for currencies that don't have a symbol" do
+      MoneyHelper.money_to_text(30000, "UZS").should eql("UZS 30,000")
+    end
     it "includes only ISO code for RTL symbols" do
       MoneyHelper.money_to_text(30000, "AFN").should eql("AFN 30,000")
       MoneyHelper.money_to_text(30000, "DZD").should eql("DZD 30,000")
