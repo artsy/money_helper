@@ -18,7 +18,7 @@ money_to_text(10000, 'AUD', true)
 produces "10,000"
 
 ``` ruby
-money_to_text(10000, 40000, 'AUD', ' ... ')
+money_range_to_text(10000, 40000, 'AUD', ' ... ')
 ```
 produces: "AUD $10,000 - 40,000"
 
