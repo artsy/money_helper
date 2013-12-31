@@ -27,11 +27,11 @@ module MoneyHelper
   def self.money_to_text(amount, currency, number_only = false)
     return nil unless amount.present?
     currency = "USD" if currency.blank?
-    symbol = Money::Currency.new(currency).symbol
-    symbol.strip! if symbol.present?
+    symbol = symbol_for_code(currency)
     include_symbol = !number_only && symbol.present? && OK_SYMBOLS.include?(symbol)
+    valid_currency = currency if code_valid?(currency)
     (number_only || SYMBOL_ONLY.include?(currency) ? "" : currency + " ") +
-      Money.parse(amount.ceil, currency).format({
+      Money.parse(amount.ceil, valid_currency).format({
         no_cents: true,
         symbol_position: :before,
         symbol: include_symbol
@@ -65,6 +65,19 @@ module MoneyHelper
       money_to_text(low, currency)
     else
       [ money_to_text(low, currency), money_to_text(high, currency, true) ].compact.join(delimiter)
+    end
+  end
+
+  private
+
+  def self.code_valid?(code)
+    Money::Currency.stringified_keys.include?(code.downcase)
+  end
+
+  def self.symbol_for_code(code)
+    return unless code && code_valid?(code)
+    Money::Currency.new(code).symbol.tap do |symbol|
+      symbol.strip! if symbol.present?
     end
   end
 
