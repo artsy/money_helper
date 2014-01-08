@@ -1,3 +1,8 @@
+0.0.4 (1/8/2014)
+------------
+* Added compatibility with Money 6.x - [@dblock](https://github.com/dblock).
+* Avoid failing on deprecated currencies (such as ITL) - [@joeyAghion](https://github.com/joeyAghion).
+
 0.0.3 (7/17/2013)
 ------------
 * Added support for currencies that don't have a symbol, eg. Uzbekistan Som (UZS) - [@dblock](https://github.com/dblock).

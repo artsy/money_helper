@@ -8,7 +8,7 @@ describe MoneyHelper do
       MoneyHelper.money_to_text(30000, "EUR").should eql("€30.000")
       MoneyHelper.money_to_text(30000, "GBP").should eql("£30,000")
       MoneyHelper.money_to_text(30000, "MYR").should eql("RM30,000")
-      MoneyHelper.money_to_text(30000, "TRY").should eql("TL30,000")
+      MoneyHelper.money_to_text(30000, "TRY").should eql("TL30.000")
       MoneyHelper.money_to_text(30000, "USD").should eql("$30,000")
     end
     it "includes ISO code and symbol for ambiguous currencies" do
@@ -55,7 +55,7 @@ describe MoneyHelper do
       MoneyHelper.money_to_text(30000, "HNL").should eql("HNL L30,000")
       MoneyHelper.money_to_text(30000, "LSL").should eql("LSL L30,000")
       MoneyHelper.money_to_text(30000, "MDL").should eql("MDL L30,000")
-      MoneyHelper.money_to_text(30000, "RON").should eql("RON L30.000")
+      MoneyHelper.money_to_text(30000, "RON").should eql("RON 30.000")
       MoneyHelper.money_to_text(30000, "SZL").should eql("SZL L30,000")
 
       MoneyHelper.money_to_text(30000, "ANG").should eql("ANG ƒ30.000")
