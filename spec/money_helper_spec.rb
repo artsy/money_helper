@@ -141,6 +141,10 @@ describe MoneyHelper do
       MoneyHelper.money_to_text("", "USD").should be_nil
       MoneyHelper.money_to_text(nil, "USD").should be_nil
     end
+    it "falls back to ISO code when currency can't be found" do
+      MoneyHelper.money_to_text(10_000, "ITL").should eql("ITL 10,000")
+      MoneyHelper.money_to_text(10_000, "ITL", true).should eql("10,000")
+    end
   end
   describe "money_range_to_text" do
     it "includes no indicator for currency for the upper amount in range" do
@@ -166,6 +170,9 @@ describe MoneyHelper do
     end
     it "returns nil when both amounts are nil" do
       MoneyHelper.money_range_to_text(nil, nil, "USD").should be_nil
+    end
+    it "falls back to ISO code when currency can't be found" do
+      MoneyHelper.money_range_to_text(10_000, 20_000, "ITL").should eql("ITL 10,000 - 20,000")
     end
   end
 end
