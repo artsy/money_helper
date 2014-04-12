@@ -1,3 +1,8 @@
+0.0.5 (4/12/2014)
+------------
+* Added compatibility with Money 6.1+ - [@syakhmi](https://github.com/syakhmi).
+* Dropped support for pre 6.0 versions of Money - [@syakhmi](https://github.com/syakhmi).
+
 0.0.4 (1/8/2014)
 ------------
 * Added compatibility with Money 6.x - [@dblock](https://github.com/dblock).
