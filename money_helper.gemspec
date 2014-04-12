@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'money_helper'
-  s.version     = '0.0.4'
-  s.date        = '2014-01-08'
+  s.version     = '0.0.5'
+  s.date        = '2014-04-12'
   s.summary     = "MoneyHelper international price formatting utility"
   s.description = "A simple module to assist in formatting unambiguous prices and price ranges in international currencies in a Roman Script context."
   s.authors     = ["Sahil Yakhmi", "Joey Aghion"]
