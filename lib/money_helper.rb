@@ -4,10 +4,11 @@ require 'active_support/core_ext/object/blank'
 require 'money'
 
 module MoneyHelper
+  I18n.enforce_available_locales = false
 
-  SYMBOL_ONLY = %w{USD GBP EUR MYR TRY} #don't use ISO code
+  SYMBOL_ONLY = %w{USD GBP EUR MYR} #don't use ISO code
   OK_SYMBOLS = %w{
-    $ £ € ¥ 元 р. L ƒ ৳ P R$ K ₡ D ლ ₵ Q G ₹ Rp ₪ ₩ ₭ R RM ₨ ₮ դր. C$ ₦ TL ₲ ₱ T ฿ T$ m ₴ ₫ ៛
+    $ £ € ¥ 元 р. L ƒ ৳ P R$ K ₡ D ლ ₵ Q G ₹ Rp ₪ ₩ ₭ R RM ₨ ₮ դր. C$ ₦ ₲ ₱ T ฿ T$ m ₴ ₫ ៛ ₺ E ₽
   } #ok to include in string
 
   ##

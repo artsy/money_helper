@@ -1,3 +1,7 @@
+1.0.0 (3/7/2015)
+------------
+* Added compatibility with Money 6.5.1+, including new currency symbols - [@syakhmi](https://github.com/syakhmi).
+
 0.0.5 (4/12/2014)
 ------------
 * Added compatibility with Money 6.1+ - [@syakhmi](https://github.com/syakhmi).
