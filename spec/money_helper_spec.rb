@@ -145,6 +145,10 @@ describe MoneyHelper do
       expect(MoneyHelper.money_to_text(10_000, "ITL")).to eql("ITL 10,000")
       expect(MoneyHelper.money_to_text(10_000, "ITL", true)).to eql("10,000")
     end
+    it 'allows options to be passed through and cents displayed' do
+      expect(MoneyHelper.money_to_text(10_000.1, 'USD', nil, no_cents: false)).to eq '$10,000.10'
+      expect(MoneyHelper.money_to_text(10_000.1, 'USD')).to eq '$10,000'
+    end
   end
   describe "money_range_to_text" do
     it "includes no indicator for currency for the upper amount in range" do
