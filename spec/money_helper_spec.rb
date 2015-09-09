@@ -150,6 +150,19 @@ describe MoneyHelper do
       expect(MoneyHelper.money_to_text(10_000.1, 'USD')).to eq '$10,000'
     end
   end
+  describe 'symbol_with_optional_iso_code' do
+    it 'just includes the symbol for USD GBP EUR and MYR' do
+      expect(MoneyHelper.symbol_with_optional_iso_code("EUR")).to eql("€")
+      expect(MoneyHelper.symbol_with_optional_iso_code("GBP")).to eql("£")
+      expect(MoneyHelper.symbol_with_optional_iso_code("MYR")).to eql("RM")
+      expect(MoneyHelper.symbol_with_optional_iso_code("USD")).to eql("$")
+    end
+    it 'includes the iso code as well for other currencies' do
+      expect(MoneyHelper.symbol_with_optional_iso_code("AUD")).to eql("AUD $")
+      expect(MoneyHelper.symbol_with_optional_iso_code("UZS")).to eql("UZS")
+      expect(MoneyHelper.symbol_with_optional_iso_code("JPY")).to eql("JPY ¥")
+    end
+  end
   describe "money_range_to_text" do
     it "includes no indicator for currency for the upper amount in range" do
       expect(MoneyHelper.money_range_to_text(30000, 40000, "USD")).to eql("$30,000 - 40,000")

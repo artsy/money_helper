@@ -37,6 +37,17 @@ module MoneyHelper
       Money.new(amount*subunit_factor.ceil, valid_currency).format(money_options).delete(' ')
   end
 
+  def self.symbol_with_optional_iso_code(currency = 'USD')
+    symbol = symbol_for_code(currency)
+    if SYMBOL_ONLY.include?(currency)
+      symbol
+    elsif symbol
+      "#{iso_for_currency(currency)} #{symbol}"
+    else
+      "#{iso_for_currency(currency)}"
+    end
+  end
+
   ##
   # Formats a low and high amount in the given currency into a price string
   #
@@ -73,11 +84,17 @@ module MoneyHelper
     Money::Currency.stringified_keys.include?(code.downcase)
   end
 
+  def self.iso_for_currency(code)
+    return unless code && code_valid?(code)
+    Money::Currency.new(code).iso_code.tap do |iso_code|
+      iso_code.strip! if iso_code.present?
+    end
+  end
+
   def self.symbol_for_code(code)
     return unless code && code_valid?(code)
     Money::Currency.new(code).symbol.tap do |symbol|
       symbol.strip! if symbol.present?
     end
   end
-
 end
