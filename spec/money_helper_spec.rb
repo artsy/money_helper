@@ -192,4 +192,19 @@ describe MoneyHelper do
       expect(MoneyHelper.money_range_to_text(10_000, 20_000, "ITL")).to eql("ITL 10,000 - 20,000")
     end
   end
+  describe "symbol_with_optional_iso_code" do
+    it "returns the symbol only if currency is in SYMBOL_ONLY list" do
+      expect(MoneyHelper.symbol_with_optional_iso_code("EUR")).to eql("€")
+      expect(MoneyHelper.symbol_with_optional_iso_code("USD")).to eql("$")
+    end
+    it "returns iso code and symbol if symbol is in OK_SYMBOLS" do
+      expect(MoneyHelper.symbol_with_optional_iso_code("INR")).to eql("INR ₹")
+      expect(MoneyHelper.symbol_with_optional_iso_code("KHR")).to eql("KHR ៛")
+      expect(MoneyHelper.symbol_with_optional_iso_code("KPW")).to eql("KPW ₩")
+    end
+    it "returns only the iso code if symbol is not in OK_SYMBOLS" do
+      expect(MoneyHelper.symbol_with_optional_iso_code("CHF")).to eql("CHF")
+      expect(MoneyHelper.symbol_with_optional_iso_code("YER")).to eql("YER")
+    end
+  end
 end
