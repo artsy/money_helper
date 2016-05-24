@@ -41,7 +41,7 @@ module MoneyHelper
     symbol = symbol_for_code(currency)
     if SYMBOL_ONLY.include?(currency)
       symbol
-    elsif symbol
+    elsif symbol && OK_SYMBOLS.include?(symbol)
       "#{iso_for_currency(currency)} #{symbol}"
     else
       "#{iso_for_currency(currency)}"
