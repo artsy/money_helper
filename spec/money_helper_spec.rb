@@ -145,6 +145,23 @@ describe MoneyHelper do
       expect(MoneyHelper.money_to_text(10_000, "ITL")).to eql("ITL 10,000")
       expect(MoneyHelper.money_to_text(10_000, "ITL", true)).to eql("10,000")
     end
+    it 'allows options to be passed through and cents displayed' do
+      expect(MoneyHelper.money_to_text(10_000.1, 'USD', nil, no_cents: false)).to eq '$10,000.10'
+      expect(MoneyHelper.money_to_text(10_000.1, 'USD')).to eq '$10,000'
+    end
+  end
+  describe 'symbol_with_optional_iso_code' do
+    it 'just includes the symbol for USD GBP EUR and MYR' do
+      expect(MoneyHelper.symbol_with_optional_iso_code("EUR")).to eql("€")
+      expect(MoneyHelper.symbol_with_optional_iso_code("GBP")).to eql("£")
+      expect(MoneyHelper.symbol_with_optional_iso_code("MYR")).to eql("RM")
+      expect(MoneyHelper.symbol_with_optional_iso_code("USD")).to eql("$")
+    end
+    it 'includes the iso code as well for other currencies' do
+      expect(MoneyHelper.symbol_with_optional_iso_code("AUD")).to eql("AUD $")
+      expect(MoneyHelper.symbol_with_optional_iso_code("UZS")).to eql("UZS")
+      expect(MoneyHelper.symbol_with_optional_iso_code("JPY")).to eql("JPY ¥")
+    end
   end
   describe "money_range_to_text" do
     it "includes no indicator for currency for the upper amount in range" do
@@ -173,6 +190,21 @@ describe MoneyHelper do
     end
     it "falls back to ISO code when currency can't be found" do
       expect(MoneyHelper.money_range_to_text(10_000, 20_000, "ITL")).to eql("ITL 10,000 - 20,000")
+    end
+  end
+  describe "symbol_with_optional_iso_code" do
+    it "returns the symbol only if currency is in SYMBOL_ONLY list" do
+      expect(MoneyHelper.symbol_with_optional_iso_code("EUR")).to eql("€")
+      expect(MoneyHelper.symbol_with_optional_iso_code("USD")).to eql("$")
+    end
+    it "returns iso code and symbol if symbol is in OK_SYMBOLS" do
+      expect(MoneyHelper.symbol_with_optional_iso_code("INR")).to eql("INR ₹")
+      expect(MoneyHelper.symbol_with_optional_iso_code("KHR")).to eql("KHR ៛")
+      expect(MoneyHelper.symbol_with_optional_iso_code("KPW")).to eql("KPW ₩")
+    end
+    it "returns only the iso code if symbol is not in OK_SYMBOLS" do
+      expect(MoneyHelper.symbol_with_optional_iso_code("CHF")).to eql("CHF")
+      expect(MoneyHelper.symbol_with_optional_iso_code("YER")).to eql("YER")
     end
   end
 end

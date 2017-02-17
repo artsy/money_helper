@@ -25,19 +25,27 @@ module MoneyHelper
   #   currency: (String)
   #   number_only: (Boolean) optional flag to exclude currency indicators (retains number formatting
   #     specific to currency)
-  def self.money_to_text(amount, currency, number_only = false)
+  def self.money_to_text(amount, currency, number_only = false, options = {})
     return nil unless amount.present?
     currency = "USD" if currency.blank?
     valid_currency = code_valid?(currency) ? currency : "USD"
     symbol = symbol_for_code(currency)
     include_symbol = !number_only && symbol.present? && OK_SYMBOLS.include?(symbol)
     subunit_factor = Money::Currency.new(valid_currency).subunit_to_unit
+    money_options = { no_cents: true, symbol_position: :before, symbol: include_symbol }.merge(options)
     (number_only || SYMBOL_ONLY.include?(currency) ? "" : currency + " ") +
-      Money.new(amount*subunit_factor.ceil, valid_currency).format({
-        no_cents: true,
-        symbol_position: :before,
-        symbol: include_symbol
-      }).delete(' ')
+      Money.new(amount*subunit_factor.ceil, valid_currency).format(money_options).delete(' ')
+  end
+
+  def self.symbol_with_optional_iso_code(currency = 'USD')
+    symbol = symbol_for_code(currency)
+    if SYMBOL_ONLY.include?(currency)
+      symbol
+    elsif symbol && OK_SYMBOLS.include?(symbol)
+      "#{iso_for_currency(currency)} #{symbol}"
+    else
+      "#{iso_for_currency(currency)}"
+    end
   end
 
   ##
@@ -76,11 +84,17 @@ module MoneyHelper
     Money::Currency.stringified_keys.include?(code.downcase)
   end
 
+  def self.iso_for_currency(code)
+    return unless code && code_valid?(code)
+    Money::Currency.new(code).iso_code.tap do |iso_code|
+      iso_code.strip! if iso_code.present?
+    end
+  end
+
   def self.symbol_for_code(code)
     return unless code && code_valid?(code)
     Money::Currency.new(code).symbol.tap do |symbol|
       symbol.strip! if symbol.present?
     end
   end
-
 end
