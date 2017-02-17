@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.test_files  = Dir['spec/*.rb']
   s.homepage    = 'https://github.com/syakhmi/money_helper'
   s.add_dependency('money', '~> 6.5')
-  s.add_dependency('activesupport', '~> 4')
+  s.add_dependency('activesupport')
   s.add_development_dependency('rspec', '~> 3')
   s.licenses = ['MIT']
 end
