@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/artsy/money_helper'
   s.add_dependency('money', '~> 6.5')
   s.add_dependency('activesupport')
+  s.add_development_dependency('appraisal')
   s.add_development_dependency('rspec', '~> 3')
   s.licenses = ['MIT']
 end
