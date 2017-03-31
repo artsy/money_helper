@@ -1,3 +1,9 @@
+Next
+----
+* [#10](https://github.com/syakhmi/money_helper/pull/10): Relaxed activesupport version dependency - [@dblock](https://github.com/dblock).
+* [#8](https://github.com/syakhmi/money_helper/pull/8): The `money_to_text` method now takes options - [@mzikherman](https://github.com/mzikherman).
+* [#8](https://github.com/syakhmi/money_helper/pull/8): Added `symbol_with_optional_iso_code` - [@mzikherman](https://github.com/mzikherman).
+
 1.0.0 (3/7/2015)
 ------------
 * Added compatibility with Money 6.5.1+, including new currency symbols - [@syakhmi](https://github.com/syakhmi).
