@@ -1,29 +1,29 @@
 language: ruby
-script:   bundle exec rspec
-cache:    bundler
-sudo:     false
+
+cache: bundler
+
+sudo: false
 
 rvm:
   - 2.2.7
   - 2.3.4
   - 2.4.1
+  - 2.5
   - ruby-head
 
-gemfile:
-  - gemfiles/activesupport_40.gemfile
-  - gemfiles/activesupport_41.gemfile
-  - gemfiles/activesupport_42.gemfile
-  - gemfiles/activesupport_50.gemfile
-  - gemfiles/activesupport_51.gemfile
-  - gemfiles/activesupport_edge.gemfile
-
 matrix:
-  exclude:
-    - rvm: 2.4.1
-      gemfile: gemfiles/activesupport_40.gemfile
-    - rvm: 2.4.1
-      gemfile: gemfiles/activesupport_41.gemfile
+  allow_failures:
     - rvm: ruby-head
+  include:
+    - rvm: 2.5
       gemfile: gemfiles/activesupport_40.gemfile
-    - rvm: ruby-head
+    - rvm: 2.5
       gemfile: gemfiles/activesupport_41.gemfile
+    - rvm: 2.5
+      gemfile: gemfiles/activesupport_42.gemfile
+    - rvm: 2.5
+      gemfile: gemfiles/activesupport_50.gemfile
+    - rvm: 2.5
+      gemfile: gemfiles/activesupport_51.gemfile
+    - rvm: 2.5
+      gemfile: gemfiles/activesupport_edge.gemfile
