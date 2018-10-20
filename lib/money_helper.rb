@@ -1,15 +1,13 @@
-# encoding: UTF-8
-
 require 'active_support/core_ext/object/blank'
 require 'money'
 
 module MoneyHelper
   I18n.enforce_available_locales = false
 
-  SYMBOL_ONLY = %w{USD GBP EUR MYR} #don't use ISO code
-  OK_SYMBOLS = %w{
+  SYMBOL_ONLY = %w[USD GBP EUR MYR].freeze # don't use ISO code
+  OK_SYMBOLS = %w[
     $ £ € ¥ 元 р. L ƒ ৳ P R$ K ₡ D ლ ₵ Q G ₹ Rp ₪ ₩ ₭ R RM ₨ ₮ դր. C$ ₦ ₲ ₱ T ฿ T$ m ₴ ₫ ៛ ₺ E ₽
-  } #ok to include in string
+  ].freeze # ok to include in string
 
   ##
   # Formats a single amount in the given currency into a price string. Defaults to USD if currency not
@@ -27,14 +25,15 @@ module MoneyHelper
   #     specific to currency)
   def self.money_to_text(amount, currency, number_only = false, options = {})
     return nil unless amount.present?
-    currency = "USD" if currency.blank?
-    valid_currency = code_valid?(currency) ? currency : "USD"
+
+    currency = 'USD' if currency.blank?
+    valid_currency = code_valid?(currency) ? currency : 'USD'
     symbol = symbol_for_code(currency)
     include_symbol = !number_only && symbol.present? && OK_SYMBOLS.include?(symbol)
     subunit_factor = Money::Currency.new(valid_currency).subunit_to_unit
     money_options = { no_cents: true, symbol_position: :before, symbol: include_symbol }.merge(options)
-    (number_only || SYMBOL_ONLY.include?(currency) ? "" : currency + " ") +
-      Money.new(amount*subunit_factor.ceil, valid_currency).format(money_options).delete(' ')
+    (number_only || SYMBOL_ONLY.include?(currency) ? '' : currency + ' ') +
+      Money.new(amount * subunit_factor.ceil, valid_currency).format(money_options).delete(' ')
   end
 
   def self.symbol_with_optional_iso_code(currency = 'USD')
@@ -44,7 +43,7 @@ module MoneyHelper
     elsif symbol && OK_SYMBOLS.include?(symbol)
       "#{iso_for_currency(currency)} #{symbol}"
     else
-      "#{iso_for_currency(currency)}"
+      iso_for_currency(currency).to_s
     end
   end
 
@@ -68,13 +67,13 @@ module MoneyHelper
     if low.blank? && high.blank?
       nil
     elsif low.blank?
-      "Under " + money_to_text(high, currency)
+      'Under ' + money_to_text(high, currency)
     elsif high.blank?
-      money_to_text(low, currency) + " and up"
+      money_to_text(low, currency) + ' and up'
     elsif low == high
       money_to_text(low, currency)
     else
-      [ money_to_text(low, currency), money_to_text(high, currency, true) ].compact.join(delimiter)
+      [money_to_text(low, currency), money_to_text(high, currency, true)].compact.join(delimiter)
     end
   end
 
@@ -86,6 +85,7 @@ module MoneyHelper
 
   def self.iso_for_currency(code)
     return unless code && code_valid?(code)
+
     Money::Currency.new(code).iso_code.tap do |iso_code|
       iso_code.strip! if iso_code.present?
     end
@@ -93,6 +93,7 @@ module MoneyHelper
 
   def self.symbol_for_code(code)
     return unless code && code_valid?(code)
+
     Money::Currency.new(code).symbol.tap do |symbol|
       symbol.strip! if symbol.present?
     end
