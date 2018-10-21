@@ -1,0 +1,18 @@
+AllCops:
+  Exclude:
+    - vendor/**/*
+    - gemfiles/vendor/**/*
+
+Metrics:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 512
+
+Style/Documentation:
+  Enabled: false
+
+Naming/MethodName:
+  Enabled: false
+
+inherit_from: .rubocop_todo.yml
