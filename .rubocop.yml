@@ -1,3 +1,8 @@
+AllCops:
+  Exclude:
+    - vendor/**/*
+    - gemfiles/vendor/**/*
+
 Metrics:
   Enabled: false
 
