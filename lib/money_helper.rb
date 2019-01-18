@@ -2,6 +2,7 @@ require 'active_support/core_ext/object/blank'
 require 'money'
 
 module MoneyHelper
+  Money.locale_backend = :currency
   I18n.enforce_available_locales = false
 
   SYMBOL_ONLY = %w[USD GBP EUR MYR].freeze # don't use ISO code
@@ -31,7 +32,7 @@ module MoneyHelper
     symbol = symbol_for_code(currency)
     include_symbol = !number_only && symbol.present? && OK_SYMBOLS.include?(symbol)
     subunit_factor = Money::Currency.new(valid_currency).subunit_to_unit
-    money_options = { no_cents: true, symbol_position: :before, symbol: include_symbol }.merge(options)
+    money_options = { no_cents: true, format: '%u %n', symbol: include_symbol }.merge(options)
     (number_only || SYMBOL_ONLY.include?(currency) ? '' : currency + ' ') +
       Money.new(amount * subunit_factor.ceil, valid_currency).format(money_options).delete(' ')
   end
