@@ -1,5 +1,6 @@
 ### 1.0.2 (Next)
 
+* [#16](https://github.com/artsy/money_helper/pull/16): Remove deprecation warnings - [@sweir27](https://github.com/sweir27).
 * [#15](https://github.com/artsy/money_helper/pull/15): Added Rubocop - [@dblock](https://github.com/dblock).
 * Your contribution here.
 
