@@ -25,6 +25,11 @@ money_range_to_text(10000, 40000, 'AUD', ' ... ')
 ```
 produces: "AUD $10,000 ... 40,000"
 
+Defaults
+--------
+
+As of [#16](https://github.com/artsy/money_helper/pull/16) this library explicitly specifies the `Money.locale_backend = :currency` default.
+
 Contributing
 ------------
 
