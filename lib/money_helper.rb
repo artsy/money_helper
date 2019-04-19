@@ -80,8 +80,6 @@ module MoneyHelper
     end
   end
 
-  private
-
   def self.code_valid?(code)
     Money::Currency.stringified_keys.include?(code.downcase)
   end
