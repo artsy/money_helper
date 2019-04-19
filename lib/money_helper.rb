@@ -1,3 +1,5 @@
+require_relative 'version'
+
 require 'active_support/core_ext/object/blank'
 require 'money'
 
@@ -77,8 +79,6 @@ module MoneyHelper
       [money_to_text(low, currency), money_to_text(high, currency, true)].compact.join(delimiter)
     end
   end
-
-  private
 
   def self.code_valid?(code)
     Money::Currency.stringified_keys.include?(code.downcase)

@@ -1,4 +1,4 @@
-require 'money_helper'
+require 'spec_helper'
 
 describe MoneyHelper do
   describe 'money_to_text' do
