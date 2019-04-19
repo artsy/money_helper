@@ -1,3 +1,5 @@
+require_relative 'version'
+
 require 'active_support/core_ext/object/blank'
 require 'money'
 
