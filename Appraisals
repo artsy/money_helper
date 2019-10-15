@@ -22,6 +22,10 @@ appraise 'activesupport_52' do
   gem 'activesupport', '~> 5.2.1'
 end
 
+appraise 'activesupport_60' do
+  gem 'activesupport', '~> 6.0.0'
+end
+
 appraise 'activesupport_edge' do
   git 'git://github.com/rails/rails.git' do
     gem 'activesupport', require: 'active_support'
