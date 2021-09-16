@@ -51,6 +51,36 @@ module MoneyHelper
   end
 
   ##
+  # Formats a single amount in the given currency into a price string. Defaults to USD if currency not
+  #   given.
+  #
+  # = Example
+  #
+  #   MoneyHelper.format(30_175_93, currency: 'USD')  #=> 'USD $30,175.93'
+  #   MoneyHelper.format(30_175_93, currency: 'EUR')  #=> 'EUR €30.175,93'
+  #   MoneyHelper.format(30_175_93)                   #=> 'USD $30,175.93'
+  #
+  # = Arguments
+  #
+  #   amount_minor: (Integer) amount in minor unit
+  #   currency: (String) ISO currency code
+  #   with_currency: (Boolean) optional flag to include ISO currency code, default to true
+  #   with_symbol: (Boolean) optional flag to include currency symbol, default to true
+  def self.format(amount_minor, currency: 'USD', with_currency: true, with_symbol: true)
+    return '' if amount_minor.blank?
+
+    money_options = {
+      format: '%u%n',
+      symbol: with_symbol
+    }
+
+    formatted_amount = Money.new(amount_minor, currency).format(money_options)
+    formatted_currency = with_currency ? currency.upcase : ''
+
+    "#{formatted_currency} #{formatted_amount}".strip
+  end
+
+  ##
   # Formats a low and high amount in the given currency into a price string
   #
   # = Example
