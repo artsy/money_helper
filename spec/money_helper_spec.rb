@@ -200,7 +200,6 @@ describe MoneyHelper do
       expect(MoneyHelper.money_to_text(30_000, 'SRD')).to eql('SRD $30,000')
       expect(MoneyHelper.money_to_text(30_000, 'TWD')).to eql('TWD $30,000')
       expect(MoneyHelper.money_to_text(30_000, 'TTD')).to eql('TTD $30,000')
-      expect(MoneyHelper.money_to_text(30_000, 'UYU')).to eql('UYU $30.000')
       expect(MoneyHelper.money_to_text(30_000, 'XCD')).to eql('XCD $30,000')
       expect(MoneyHelper.money_to_text(30_000, 'ZWL')).to eql('ZWL $30,000')
 
@@ -216,7 +215,6 @@ describe MoneyHelper do
       expect(MoneyHelper.money_to_text(30_000, 'HNL')).to eql('HNL L30,000')
       expect(MoneyHelper.money_to_text(30_000, 'LSL')).to eql('LSL L30,000')
       expect(MoneyHelper.money_to_text(30_000, 'MDL')).to eql('MDL L30,000')
-      expect(MoneyHelper.money_to_text(30_000, 'RON')).to eql('RON 30.000')
       expect(MoneyHelper.money_to_text(30_000, 'SZL')).to eql('SZL E30,000')
 
       expect(MoneyHelper.money_to_text(30_000, 'ANG')).to eql('ANG ƒ30.000')
@@ -229,7 +227,6 @@ describe MoneyHelper do
       expect(MoneyHelper.money_to_text(30_000, 'SVC')).to eql('SVC ₡30,000')
 
       expect(MoneyHelper.money_to_text(30_000, 'MUR')).to eql('MUR ₨30,000')
-      expect(MoneyHelper.money_to_text(30_000, 'NPR')).to eql('NPR ₨30,000')
       expect(MoneyHelper.money_to_text(30_000, 'PKR')).to eql('PKR ₨30,000')
       expect(MoneyHelper.money_to_text(30_000, 'SCR')).to eql('SCR ₨30,000')
     end
@@ -265,6 +262,11 @@ describe MoneyHelper do
     end
     it "includes only ISO code for currencies that don't have a symbol" do
       expect(MoneyHelper.money_to_text(30_000, 'UZS')).to eql('UZS 30,000')
+    end
+    it "includes only ISO code for currencies with symbols we don't want to include" do
+      expect(MoneyHelper.money_to_text(30_000, 'NPR')).to eql('NPR 30,000')
+      expect(MoneyHelper.money_to_text(30_000, 'RON')).to eql('RON 30.000')
+      expect(MoneyHelper.money_to_text(30_000, 'UYU')).to eql('UYU 30.000')
     end
     it 'includes only ISO code for RTL symbols' do
       expect(MoneyHelper.money_to_text(30_000, 'AFN')).to eql('AFN 30,000')
