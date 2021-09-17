@@ -1,6 +1,10 @@
-### 1.0.3 (Next)
+### 2.0.0 (Next)
 
 * Your contribution here.
+
+#### Breaking Changes
+
+* [#20](https://github.com/artsy/money_helper/pull/20): Update `money_to_text` and `money_range_to_text` to expect amounts in minor unit and simplify formatting; drop support for Ruby 2.3 and 2.4 - [@starsirius](https://github.com/starsirius)
 
 ### 1.0.2 (2019/4/19)
 
