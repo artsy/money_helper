@@ -1,0 +1,47 @@
+version: 2.1
+
+references:
+  set_env: &set_env
+    run:
+      name: Set up environment
+      command: |
+        echo "export BUNDLE_GEMFILE=$(pwd)/gemfiles/activesupport_$ACTIVESUPPORT_VERSION.gemfile" >> $BASH_ENV
+  bundle: &bundle
+    run:
+      name: Install dependencies
+      command: bundle install
+  test: &test
+    run:
+      name: Run test suite
+      command: bundle exec rake
+
+jobs:
+  test:
+    docker:
+      - image: "cimg/ruby:<< parameters.ruby_version >>"
+    parameters:
+      ruby_version:
+        type: string
+      activesupport_version:
+        type: string
+    environment:
+      ACTIVESUPPORT_VERSION: << parameters.activesupport_version >>
+    steps:
+      - checkout
+      - <<: *set_env
+      - <<: *bundle
+      - <<: *test
+
+workflows:
+  default:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              ruby_version: ["2.5", "2.6", "2.7"]
+              activesupport_version: ["40", "41", "42", "50", "51", "52", "edge"]
+            exclude:
+              - ruby_version: "2.5"
+                activesupport_version: "edge"
+              - ruby_version: "2.6"
+                activesupport_version: "edge"
