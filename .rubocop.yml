@@ -15,4 +15,7 @@ Style/Documentation:
 Naming/MethodName:
   Enabled: false
 
+Style/AsciiComments:
+  Enabled: false
+
 inherit_from: .rubocop_todo.yml

@@ -18,25 +18,28 @@ module MoneyHelper
   #
   # = Example
   #
-  #   $10,000; HKD $10,000 for (10000, "USD") and (10000, "HKD"), respectively
+  #   MoneyHelper.money_to_text(30_175_93, currency: 'USD')  #=> 'USD $30,175.93'
+  #   MoneyHelper.money_to_text(30_175_93, currency: 'EUR')  #=> 'EUR €30.175,93'
+  #   MoneyHelper.money_to_text(30_175_93)                   #=> 'USD $30,175.93'
   #
   # = Arguments
   #
-  #   amount: (Float)
-  #   currency: (String)
-  #   number_only: (Boolean) optional flag to exclude currency indicators (retains number formatting
-  #     specific to currency)
-  def self.money_to_text(amount, currency, number_only = false, options = {})
-    return nil unless amount.present?
+  #   amount_minor: (Integer) amount in minor unit
+  #   currency: (String) optional ISO currency code, defaulting to USD
+  #   with_currency: (Boolean) optional flag to include ISO currency code, defaulting to true
+  #   with_symbol: (Boolean) optional flag to include currency symbol, defaulting to true
+  def self.money_to_text(amount_minor, currency: 'USD', with_currency: true, with_symbol: true)
+    return '' if amount_minor.blank?
 
-    currency = 'USD' if currency.blank?
-    valid_currency = code_valid?(currency) ? currency : 'USD'
-    symbol = symbol_for_code(currency)
-    include_symbol = !number_only && symbol.present? && OK_SYMBOLS.include?(symbol)
-    subunit_factor = Money::Currency.new(valid_currency).subunit_to_unit
-    money_options = { no_cents: true, format: '%u %n', symbol: include_symbol }.merge(options)
-    (number_only || SYMBOL_ONLY.include?(currency) ? '' : currency + ' ') +
-      Money.new(amount * subunit_factor.ceil, valid_currency).format(money_options).delete(' ')
+    money_options = {
+      format: '%u%n',
+      symbol: with_symbol
+    }
+
+    formatted_amount = Money.new(amount_minor, currency).format(money_options)
+    formatted_currency = with_currency ? currency.upcase : ''
+
+    "#{formatted_currency} #{formatted_amount}".strip
   end
 
   def self.symbol_with_optional_iso_code(currency = 'USD')
@@ -55,28 +58,30 @@ module MoneyHelper
   #
   # = Example
   #
-  #   $10,000 - 20,000 for (10000, 20000, "USD")
-  #   HKD $10,000 - 20,000 for (10000, 20000, "HKD")
-  #   $10,000 ... 20,000 for (10000, 20000, "USD", " ... ")
-  #   HKD $10,000 ... 20,000 for (10000, 20000, "HKD", " ... ")
+  #   MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'USD')     #=> 'USD $30,175.93 - 40,983.27'
+  #   MoneyHelper.money_range_to_text(30_175_93, 40_983_27)                      #=> 'USD $30,175.93 - 40,983.27'
+  #   MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'EUR')     #=> 'EUR €30.175,93 - 40.983,27'
+  #   MoneyHelper.money_range_to_text(30_175_93, 40_983_27, delimiter: ' ... ')  #=> 'USD $30,175.93 ... 40,983.27'
   #
   # = Arguments
   #
-  #   low: (Float)
-  #   high: (Float)
-  #   currency: (String)
+  #   low: (Integer) amount in minor unit
+  #   high: (Integer) amount in minor unit
+  #   currency: (String) optional ISO currency code, defaulting to USD
   #   delimiter: (String) optional
-  def self.money_range_to_text(low, high, currency, delimiter = ' - ')
+  def self.money_range_to_text(low, high, currency: 'USD', delimiter: ' - ')
     if low.blank? && high.blank?
-      nil
+      ''
     elsif low.blank?
-      'Under ' + money_to_text(high, currency)
+      'Under ' + money_to_text(high, currency: currency)
     elsif high.blank?
-      money_to_text(low, currency) + ' and up'
+      money_to_text(low, currency: currency) + ' and up'
     elsif low == high
-      money_to_text(low, currency)
+      money_to_text(low, currency: currency)
     else
-      [money_to_text(low, currency), money_to_text(high, currency, true)].compact.join(delimiter)
+      formatted_low = money_to_text(low, currency: currency)
+      formatted_high = money_to_text(high, currency: currency, with_currency: false, with_symbol: false)
+      [formatted_low, formatted_high].compact.join(delimiter)
     end
   end
 
