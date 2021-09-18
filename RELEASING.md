@@ -11,9 +11,9 @@ bundle install
 rake
 ```
 
-Check that the last build succeeded in [Travis CI](https://travis-ci.org/artsy/money_helper) for all supported platforms.
+Check that the last build succeeded on [CI][ci] for all supported platforms.
 
-Change "Next" in [CHANGELOG.md](CHANGELOG.md) to the current date.
+Change "Next" in [CHANGELOG.md][changelog] to the current date.
 
 ```
 ### 0.2.2 (2015/7/10)
@@ -42,7 +42,7 @@ Pushed money_helper 0.2.2 to rubygems.org.
 
 ### Prepare for the Next Version
 
-Add the next release to [CHANGELOG.md](CHANGELOG.md).
+Add the next release to [CHANGELOG.md][changelog].
 
 ```
 ### 0.2.3 (Next)
@@ -50,7 +50,7 @@ Add the next release to [CHANGELOG.md](CHANGELOG.md).
 * Your contribution here.
 ```
 
-Increment the third version number in [lib/version.rb](lib/version.rb).
+Increment the third version number in [lib/version.rb][version].
 
 Commit your changes.
 
@@ -59,3 +59,7 @@ git add CHANGELOG.md lib/version.rb
 git commit -m "Preparing for next development iteration, 0.2.3."
 git push origin master
 ```
+
+[ci]: https://circleci.com/gh/artsy/money_helper/tree/master
+[changelog]: CHANGELOG.md
+[version]: lib/version.rb
