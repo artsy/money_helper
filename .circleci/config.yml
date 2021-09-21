@@ -39,7 +39,7 @@ workflows:
           matrix:
             parameters:
               ruby_version: ["2.5", "2.6", "2.7"]
-              activesupport_version: ["40", "41", "42", "50", "51", "52", "edge"]
+              activesupport_version: ["52", "60", "61", "edge"]
             exclude:
               - ruby_version: "2.5"
                 activesupport_version: "edge"

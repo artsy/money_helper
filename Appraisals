@@ -1,27 +1,15 @@
 # frozen_string_literal: true
 
-appraise 'activesupport_40' do
-  gem 'activesupport', '~> 4.0.0'
-end
-
-appraise 'activesupport_41' do
-  gem 'activesupport', '~> 4.1.0'
-end
-
-appraise 'activesupport_42' do
-  gem 'activesupport', '~> 4.2.0'
-end
-
-appraise 'activesupport_50' do
-  gem 'activesupport', '~> 5.0.0'
-end
-
-appraise 'activesupport_51' do
-  gem 'activesupport', '~> 5.1.0'
-end
-
 appraise 'activesupport_52' do
-  gem 'activesupport', '~> 5.2.1'
+  gem 'activesupport', '~> 5.2.6'
+end
+
+appraise 'activesupport_60' do
+  gem 'activesupport', '~> 6.0.4'
+end
+
+appraise 'activesupport_61' do
+  gem 'activesupport', '~> 6.1.4'
 end
 
 appraise 'activesupport_edge' do
