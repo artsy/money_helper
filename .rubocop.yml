@@ -1,13 +1,17 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   Exclude:
     - vendor/**/*
     - gemfiles/vendor/**/*
+  NewCops: enable
+  SuggestExtensions: false
+
+Layout/LineLength:
+  Max: 512
 
 Metrics:
   Enabled: false
-
-Metrics/LineLength:
-  Max: 512
 
 Style/Documentation:
   Enabled: false
@@ -17,5 +21,3 @@ Naming/MethodName:
 
 Style/AsciiComments:
   Enabled: false
-
-inherit_from: .rubocop_todo.yml

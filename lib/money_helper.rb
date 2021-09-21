@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'version'
 
 require 'active_support/core_ext/object/blank'
@@ -73,9 +75,9 @@ module MoneyHelper
     if low.blank? && high.blank?
       ''
     elsif low.blank?
-      'Under ' + money_to_text(high, currency: currency)
+      "Under #{money_to_text(high, currency: currency)}"
     elsif high.blank?
-      money_to_text(low, currency: currency) + ' and up'
+      "#{money_to_text(low, currency: currency)} and up"
     elsif low == high
       money_to_text(low, currency: currency)
     else
