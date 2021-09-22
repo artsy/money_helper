@@ -39,8 +39,8 @@ MIT License, see [LICENSE][license] for details.
 
 (c) 2013-2018 [Artsy][artsy], [Sahil Yakhmi][sahil_yakhmi], [Joey Aghion][joey_aghion] and [contributors][contributors].
 
-[ci_badge]: https://circleci.com/gh/artsy/money_helper/tree/master.svg?style=shield
-[circleci]: https://circleci.com/gh/artsy/money_helper/tree/master
+[ci_badge]: https://circleci.com/gh/artsy/money_helper/tree/main.svg?style=svg
+[circleci]: https://circleci.com/gh/artsy/money_helper/tree/main
 [#16]: https://github.com/artsy/money_helper/pull/16
 [license]: LICENSE.md
 [artsy]: https://github.com/artsy
