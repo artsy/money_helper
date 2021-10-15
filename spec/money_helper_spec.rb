@@ -139,18 +139,23 @@ describe MoneyHelper do
       expect(MoneyHelper.money_to_text(30_175_93, currency: 'AFN', with_currency: false)).to eql('؋30,175.93')
     end
 
-    it 'omits symbol when with_symbol is false' do
-      expect(MoneyHelper.money_to_text(30_175_93, currency: 'EUR', with_symbol: false)).to eql('EUR 30.175,93')
-      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AUD', with_symbol: false)).to eql('AUD 30,175.93')
-      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AMD', with_symbol: false)).to eql('AMD 30,175.93')
-      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AFN', with_symbol: false)).to eql('AFN 30,175.93')
+    it 'omits symbol when `format: symbol:` is false' do
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'EUR', format: { symbol: false })).to eql('EUR 30.175,93')
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AUD', format: { symbol: false })).to eql('AUD 30,175.93')
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AMD', format: { symbol: false })).to eql('AMD 30,175.93')
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AFN', format: { symbol: false })).to eql('AFN 30,175.93')
     end
 
-    it 'omits ISO code and symbol when both with_currency and with_symbol are false' do
-      expect(MoneyHelper.money_to_text(30_175_93, currency: 'EUR', with_currency: false, with_symbol: false)).to eql('30.175,93')
-      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AUD', with_currency: false, with_symbol: false)).to eql('30,175.93')
-      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AMD', with_currency: false, with_symbol: false)).to eql('30,175.93')
-      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AFN', with_currency: false, with_symbol: false)).to eql('30,175.93')
+    it 'omits ISO code and symbol when both `with_currency` and `format: symbol:` are false' do
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'EUR', with_currency: false, format: { symbol: false })).to eql('30.175,93')
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AUD', with_currency: false, format: { symbol: false })).to eql('30,175.93')
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AMD', with_currency: false, format: { symbol: false })).to eql('30,175.93')
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'AFN', with_currency: false, format: { symbol: false })).to eql('30,175.93')
+    end
+
+    it 'omits cents when `format: no_cents:` is true' do
+      expect(MoneyHelper.money_to_text(30_175_93, with_currency: false, format: { no_cents: true, symbol: false })).to eql('30,175')
+      expect(MoneyHelper.money_to_text(30_175_93, currency: 'EUR', with_currency: false, format: { no_cents: true, symbol: false })).to eql('30.175')
     end
 
     it 'returns an empty string if amount passed in is whitespace, empty string, or nil' do
