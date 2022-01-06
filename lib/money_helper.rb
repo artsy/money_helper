@@ -29,16 +29,15 @@ module MoneyHelper
   #   amount_minor: (Integer) amount in minor unit
   #   currency: (String) optional ISO currency code, defaulting to USD
   #   with_currency: (Boolean) optional flag to include ISO currency code, defaulting to true
-  #   with_symbol: (Boolean) optional flag to include currency symbol, defaulting to true
-  def self.money_to_text(amount_minor, currency: 'USD', with_currency: true, with_symbol: true)
+  # 　format: (Hash) optional formatting options to pass to `Money#format` e.g.:
+  #     no_cents: (Boolean) optional flag to exclude cents, defaulting to false
+  #     symbol: (Boolean) optional flag to include currency symbol, defaulting to true
+  def self.money_to_text(amount_minor, currency: 'USD', with_currency: true, format: {})
     return '' if amount_minor.blank?
 
-    money_options = {
-      format: '%u%n',
-      symbol: with_symbol
-    }
+    format_options = { format: '%u%n' }.merge(format)
 
-    formatted_amount = Money.new(amount_minor, currency).format(money_options)
+    formatted_amount = Money.new(amount_minor, currency).format(format_options)
     formatted_currency = with_currency ? currency.upcase : ''
 
     "#{formatted_currency} #{formatted_amount}".strip
@@ -82,7 +81,7 @@ module MoneyHelper
       money_to_text(low, currency: currency)
     else
       formatted_low = money_to_text(low, currency: currency)
-      formatted_high = money_to_text(high, currency: currency, with_currency: false, with_symbol: false)
+      formatted_high = money_to_text(high, currency: currency, with_currency: false, format: { symbol: false })
       [formatted_low, formatted_high].compact.join(delimiter)
     end
   end
