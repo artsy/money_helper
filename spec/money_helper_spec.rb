@@ -217,6 +217,12 @@ describe MoneyHelper do
       expect(MoneyHelper.money_range_to_text(nil, nil, currency: 'USD')).to eql('')
     end
 
+    it 'omits ISO code when with_currency is false' do
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'EUR', with_currency: false)).to eql('€30.175,93 - 40.983,27')
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'AUD', with_currency: false)).to eql('$30,175.93 - 40,983.27')
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'AMD', with_currency: false)).to eql('դր.30,175.93 - 40,983.27')
+    end
+
     it "raises an exception when currency can't be found" do
       expect do
         MoneyHelper.money_range_to_text(10_000, 20_000, currency: 'ITL')

@@ -70,17 +70,18 @@ module MoneyHelper
   #   high: (Integer) amount in minor unit
   #   currency: (String) optional ISO currency code, defaulting to USD
   #   delimiter: (String) optional
-  def self.money_range_to_text(low, high, currency: 'USD', delimiter: ' - ')
+  #   with_currency: (Boolean) optional flag to include ISO currency code, defaulting to true
+  def self.money_range_to_text(low, high, currency: 'USD', delimiter: ' - ', with_currency: true)
     if low.blank? && high.blank?
       ''
     elsif low.blank?
-      "Under #{money_to_text(high, currency: currency)}"
+      "Under #{money_to_text(high, currency: currency, with_currency: with_currency)}"
     elsif high.blank?
-      "#{money_to_text(low, currency: currency)} and up"
+      "#{money_to_text(low, currency: currency, with_currency: with_currency)} and up"
     elsif low == high
-      money_to_text(low, currency: currency)
+      money_to_text(low, currency: currency, with_currency: with_currency)
     else
-      formatted_low = money_to_text(low, currency: currency)
+      formatted_low = money_to_text(low, currency: currency, with_currency: with_currency)
       formatted_high = money_to_text(high, currency: currency, with_currency: false, format: { symbol: false })
       [formatted_low, formatted_high].compact.join(delimiter)
     end
