@@ -205,16 +205,34 @@ describe MoneyHelper do
       expect(MoneyHelper.money_range_to_text(nil, 40_983_27, currency: 'USD')).to eql('Under USD $40,983.27')
     end
 
+    it "prefixes the text 'Under ' when low amount not given and omits ISO code when with_currency is false" do
+      expect(MoneyHelper.money_range_to_text(nil, 40_983_27, currency: 'USD', with_currency: false)).to eql('Under $40,983.27')
+    end
+
     it "appends the text ' and up' when high amount not given" do
       expect(MoneyHelper.money_range_to_text(30_175_93, nil, currency: 'USD')).to eql('USD $30,175.93 and up')
+    end
+
+    it "appends the text ' and up' when high amount not given and omits ISO code when with_currency is false" do
+      expect(MoneyHelper.money_range_to_text(30_175_93, nil, currency: 'USD', with_currency: false)).to eql('$30,175.93 and up')
     end
 
     it 'treats as a single price when low amount and high amount are identical' do
       expect(MoneyHelper.money_range_to_text(30_175_93, 30_175_93, currency: 'USD')).to eql('USD $30,175.93')
     end
 
+    it 'treats as a single price when low amount and high amount are identical and omits ISO code when with_currency is false' do
+      expect(MoneyHelper.money_range_to_text(30_175_93, 30_175_93, currency: 'USD', with_currency: false)).to eql('$30,175.93')
+    end
+
     it 'returns empty string when both amounts are nil' do
       expect(MoneyHelper.money_range_to_text(nil, nil, currency: 'USD')).to eql('')
+    end
+
+    it 'omits ISO code when with_currency is false' do
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'EUR', with_currency: false)).to eql('€30.175,93 - 40.983,27')
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'AUD', with_currency: false)).to eql('$30,175.93 - 40,983.27')
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'AMD', with_currency: false)).to eql('դր.30,175.93 - 40,983.27')
     end
 
     it "raises an exception when currency can't be found" do

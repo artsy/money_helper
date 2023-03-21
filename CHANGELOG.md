@@ -1,7 +1,11 @@
-### 3.0.0 (Next)
+### 3.0.1 (Next)
+
+* [#29](https://github.com/artsy/money_helper/pull/29): Update `money_range_to_text` to receive `with_currency` parameter for optional ISO code printing - [@leamotta](https://github.com/leamotta).
+* Your contribution here.
+
+### 3.0.0 (2022-02-16)
 
 * [#27](https://github.com/artsy/money_helper/pull/27): Update `money_to_text` to pass `format` options to `Money#format` for additional features such as `no_cents` - [@agrberg](https://github.com/agrberg).
-* Your contribution here.
 
 ### 2.0.0 (2021-09-20)
 

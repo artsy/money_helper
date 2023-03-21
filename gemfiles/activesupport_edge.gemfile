@@ -4,7 +4,7 @@
 
 source 'http://rubygems.org'
 
-git 'git://github.com/rails/rails.git' do
+git 'https://github.com/rails/rails.git', branch: 'main' do
   gem 'activesupport', require: 'active_support'
 end
 
