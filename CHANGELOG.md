@@ -1,7 +1,12 @@
-### 3.0.1 (Next)
+### X.X.X (Next)
+
+* Your contribution here.
+### 3.0.2 (2023-03-22)
+
+* [#30](https://github.com/artsy/money_helper/pull/30): Update `money_range_to_text` to receive `format` parameter for optional formatting - [@leamotta](https://github.com/leamotta).
+### 3.0.1 (2023-03-21)
 
 * [#29](https://github.com/artsy/money_helper/pull/29): Update `money_range_to_text` to receive `with_currency` parameter for optional ISO code printing - [@leamotta](https://github.com/leamotta).
-* Your contribution here.
 
 ### 3.0.0 (2022-02-16)
 

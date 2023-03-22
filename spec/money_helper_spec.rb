@@ -235,6 +235,19 @@ describe MoneyHelper do
       expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'AMD', with_currency: false)).to eql('դր.30,175.93 - 40,983.27')
     end
 
+    it 'omits cents when `format: no_cents:` is true' do
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, with_currency: false, format: { no_cents: true })).to eql('$30,175 - 40,983')
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'EUR', with_currency: false, format: { no_cents: true })).to eql('€30.175 - 40.983')
+      expect(MoneyHelper.money_range_to_text(30_175_93, 30_175_93, currency: 'EUR', with_currency: false, format: { no_cents: true })).to eql('€30.175')
+      expect(MoneyHelper.money_range_to_text(nil, 30_175_93, currency: 'EUR', with_currency: false, format: { no_cents: true })).to eql('Under €30.175')
+      expect(MoneyHelper.money_range_to_text(30_175_93, nil, currency: 'EUR', with_currency: false, format: { no_cents: true })).to eql('€30.175 and up')
+    end
+
+    it 'omits cents when `format: no_cents:` is true, omits symbol when `format: symbol:` is false' do
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, with_currency: false, format: { no_cents: true, symbol: false })).to eql('30,175 - 40,983')
+      expect(MoneyHelper.money_range_to_text(30_175_93, 40_983_27, currency: 'EUR', with_currency: false, format: { no_cents: true, symbol: false })).to eql('30.175 - 40.983')
+    end
+
     it "raises an exception when currency can't be found" do
       expect do
         MoneyHelper.money_range_to_text(10_000, 20_000, currency: 'ITL')
